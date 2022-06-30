@@ -14,8 +14,8 @@ const db = async() => {
     family: 4, // Use IPv4, skip trying IPv6
   };
   try {
-    mongooseDb = await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-    .then((result) => app.listen(3000))
+    mongooseDb = await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("Connect to DB"))
     .catch((err) => console.log("err check", err));
   
     const db = mongoose.connection;

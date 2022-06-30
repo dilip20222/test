@@ -1,1 +1,1 @@
-web: bundle exec rails server -p $PORT
+web: bundle exec rails index -p 30000

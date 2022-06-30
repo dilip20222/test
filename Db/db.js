@@ -3,6 +3,7 @@ const { options } = require("../routes/routes");
 require('dotenv').config();
 
 let dbUrl = process.env.DB;
+let mongooseDb;
 
 const db = async() => {
   const options = {
@@ -13,12 +14,21 @@ const db = async() => {
     family: 4, // Use IPv4, skip trying IPv6
   };
   try {
-    await mongoose
-      .connect(dbUrl, options)
-      .then(() => {
-        console.log("DB Connected");
-      })
-      .catch((error) => console.log("Error", error));
+    mongooseDb = await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
+    .then((result) => app.listen(3000))
+    .catch((err) => console.log("err check", err));
+  
+    const db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function() {
+      console.log("we are connected to database");
+    });
+    // await mongoose
+    //   .connect(dbUrl, options)
+    //   .then(() => {
+    //     console.log("DB Connected");
+    //   })
+    //   .catch((error) => console.log("Error", error));
   } catch (error) {
     throw error;
   }

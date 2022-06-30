@@ -14,21 +14,11 @@ const db = async() => {
     family: 4, // Use IPv4, skip trying IPv6
   };
   try {
-    mongooseDb = await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("Connect to DB"))
-    .catch((err) => console.log("err check", err));
-  
-    const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function() {
-      console.log("we are connected to database");
-    });
-    // await mongoose
-    //   .connect(dbUrl, options)
-    //   .then(() => {
-    //     console.log("DB Connected");
-    //   })
-    //   .catch((error) => console.log("Error", error));
+    await mongoose.connect("mongodb://localhost/Profiles", {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }).then(() => console.log("Connected")).catch((err) => console.log("Error check ----- ", err));
+    return mongoose;
   } catch (error) {
     throw error;
   }

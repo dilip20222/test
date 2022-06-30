@@ -8,8 +8,6 @@ dotenv.config();
 const app = express();
 app.use(cors())
 
-const PORT = process.env.PORT || 3000;
-
 app.use(express.json());
 
 app.get("/get", (req, res) => {
@@ -18,6 +16,6 @@ app.get("/get", (req, res) => {
 
 app.use("/api", require("./routes/routes"));
 
-app.listen(PORT, () => {
-  console.log("Backend is running on the ", "~green;", PORT);
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Backend is running on the ", "~green;", process.env.PORT || 3000);
 });

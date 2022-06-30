@@ -39,16 +39,25 @@ route.post("/signup", async (req, res) => {
 route.post("/login", async (req, res) => {
   const { userName, password } = req.body;
   console.log("Request--", req.body);
-  if (userName === "" || password === "") {
-    return res.status(400).json({ message: "Enter valid Input !" });
-  }
-  let checkUser = await userSchema.findOne({ userName: userName });
+  try {
+    if (userName === "" || password === "") {
+      return res.status(400).json({ message: "Enter valid Input !" });
+    }
+    let checkUser = await userSchema
+      .findOne({ userName: userName })
+      .then((res) => console.log("Res", res))
+      .catch((err) => {
+        console.log("Error inside the check user", err);
+      });
 
-  if (checkUser && bcrypt.compareSync(password, checkUser.password)) {
-    let loginToken = await generateToken(checkUser.email);
-    return res.status(200).json({ user: checkUser, loginToken: loginToken });
+    if (checkUser && bcrypt.compareSync(password, checkUser.password)) {
+      let loginToken = await generateToken(checkUser.email);
+      return res.status(200).json({ user: checkUser, loginToken: loginToken });
+    }
+  } catch (error) {
+    console.log;
+    return res.status(400).json({ message: "Enter valid Credential" });
   }
-  return res.status(400).json({ message: "Enter valid Credential" });
 });
 
 module.exports = route;

@@ -17,5 +17,5 @@ app.get("/get", (req, res) => {
 app.use("/api", require("./routes/routes"));
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log("Backend is running on the ", "~green;", process.env.PORT || 3000);
+  console.log("Backend is running on the  ", "~green;", process.env.PORT || 3000);
 });

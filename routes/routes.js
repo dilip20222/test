@@ -45,7 +45,7 @@ route.post("/login", async (req, res) => {
   let checkUser = await userSchema.findOne({ userName: userName });
 
   if (checkUser && bcrypt.compareSync(password, checkUser.password)) {
-    let loginToken = await generateToken(checkUser?.email);
+    let loginToken = await generateToken(checkUser.email);
     return res.status(200).json({ user: checkUser, loginToken: loginToken });
   }
   return res.status(400).json({ message: "Enter valid Credential" });

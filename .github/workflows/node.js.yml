@@ -1,28 +1,30 @@
-name: Node.js CI
-
+name: Main
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
+    branches: [main]
+  workflow_dispatch:
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14.x"
+      - name: Install dependencies
+        run: npm install
+      - name: Run test
+        run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dilip20222/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: 808a16b0-1eaa-4a37-9a52-c8a847ca6f38
+          heroku_app_name: "herokutest1200"
+          heroku_email: "suthardips123000@gmail.com"

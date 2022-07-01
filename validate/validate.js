@@ -8,6 +8,7 @@ const valiteFun = (data) => {
   if (!data.password && data.password === "") {
     error = ["Please Enter valid password"];
   }
+  
   console.log(error)
   return error;
 };

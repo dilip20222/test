@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./routes * --exit",
+    "test": "mocha ../routes * --exit",
     "start": "node index.js",
     "nodemon": "index.js"
   },

@@ -25,7 +25,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - name: Deploy to heroku
-        uses: test/heroku-deploy@v3.12.12
+        uses: herokutest1200/heroku-deploy@v3.12.12
         with:
           heroku_api_key: 808a16b0-1eaa-4a37-9a52-c8a847ca6f38
           heroku_app_name: "herokutest1200"
